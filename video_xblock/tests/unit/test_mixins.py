@@ -348,7 +348,7 @@ class TranscriptsMixinTests(VideoXBlockTestBase):  # pylint: disable=test-inheri
         """
         detect_format_mock.return_value = None
 
-        self.assertEqual(self.xblock.convert_caps_to_vtt('test caps'), u'')
+        self.assertEqual(self.xblock.convert_caps_to_vtt('test caps'), '')
         vtt_writer_mock.assert_not_called()
         detect_format_mock.assert_called_once_with('test caps')
 
@@ -372,7 +372,7 @@ class TranscriptsMixinTests(VideoXBlockTestBase):  # pylint: disable=test-inheri
 
         # Assert
         static_content_mock.assert_called_with(
-            'test-location.vtt', 'test_transcripts.vtt', 'application/json', u'test srt transcript'
+            'test-location.vtt', 'test_transcripts.vtt', 'application/json', 'test srt transcript'
         )
         save_mock.assert_called_once_with(static_content_mock.return_value)
         course_key.assert_called_once_with()
@@ -486,7 +486,7 @@ class TranscriptsMixinTests(VideoXBlockTestBase):  # pylint: disable=test-inheri
 
             # Assert:
             self.assertEqual(transcripts, [])
-            self.assertRaises(StopIteration, transcripts_gen.next)
+            self.assertRaises(StopIteration, transcripts_gen.__next__)
             threepm_transcripts_mock.assert_called_once_with(file_id_mock, apikey_mock)
 
     def test_fetch_available_3pm_transcripts_success(self):
@@ -511,7 +511,7 @@ class TranscriptsMixinTests(VideoXBlockTestBase):  # pylint: disable=test-inheri
 
             # Assert:
             self.assertIsInstance(transcripts[0], OrderedDict)
-            self.assertSequenceEqual(test_args, transcripts[0].keys())
+            self.assertSequenceEqual(test_args, list(transcripts[0].keys()))
             threepm_transcripts_mock.assert_called_once_with(file_id_mock, apikey_mock)
             fetch_3pm_translation_mock.assert_called_once_with(test_transcripts_list[0])
 
